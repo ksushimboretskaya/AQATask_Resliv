@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import pages.MainPage;
 import pages.ResultsPage;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,6 +15,11 @@ import java.util.stream.Collectors;
 public class ResultsPageTest extends BaseTest {
 
     private static final String DATE_PATTERN = "dd MMM yyyy, E";
+    private static final String DEPARTURE_CITY_NAME = "Москва";
+    private static final String DESTINATION_CITY_NAME = "Санкт-Петербург";
+    private final static Integer INCREMENT_FOR_DEPARTURE_DATE = 1;
+    private final static Integer INCREMENT_FOR_ARRIVAL_DATE = 2;
+    private final LocalDate todayDate = LocalDate.now();
 
     @Test(priority = 1, description = "Verify departure city name")
     public void verifyDepartureCityName() {
