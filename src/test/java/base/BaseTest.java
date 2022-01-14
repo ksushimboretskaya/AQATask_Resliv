@@ -1,5 +1,6 @@
 package base;
 
+import configuration.BrowserConfig;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
@@ -12,7 +13,7 @@ public class BaseTest {
 
     @BeforeSuite(description = "Set up browser driver")
     public void setUp() {
-        DriverManager.setDriver(DriverFactory.getDriver());
+        DriverManager.setDriver(DriverFactory.getDriver(BrowserConfig.getType()));
     }
 
     @BeforeMethod(description = "Set up base page url")

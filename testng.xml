@@ -5,12 +5,8 @@
         <classes>
             <class name="testPages.ResultsPageTest">
                 <methods>
-                    <include name="verifyDepartureCityName"/>
-                    <include name="verifyDestinationCityName"/>
-                    <include name="verifyReturnDepartureCityName"/>
-                    <include name="verifyReturnDestinationCityName"/>
-                    <include name="verifyDepartureDate"/>
-                    <include name="verifyReturnDepartureDate"/>
+                    <include name="verifyCityName"/>
+                    <include name="verifyDepartureAndReturnDepartureDate"/>
                     <include name="verifyTheSortingOfTicketPrices"/>
                 </methods>
             </class>
