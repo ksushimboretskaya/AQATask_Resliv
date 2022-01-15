@@ -1,5 +1,6 @@
 package pages;
 
+import com.google.common.base.CharMatcher;
 import data.AviaTickets;
 import data.RouteDetails;
 import org.openqa.selenium.WebElement;
@@ -36,7 +37,7 @@ public class ResultsPage extends BasePage {
     @FindBy(xpath = "//*[@data-test-id='ticket-desktop']//*[@data-test-id='price']")
     private List<WebElement> ticketsPriceLabel;
 
-    private final AviaTickets aviaTicket = new AviaTickets();
+
     private final Logger logger = Logger.getLogger("Results page logger");
 
     public ResultsPage() {
@@ -47,11 +48,12 @@ public class ResultsPage extends BasePage {
         WaitUtils.waitForVisibilityOfAllElements(ticketElement);
         List<AviaTickets> aviaTicketsList = new ArrayList<>();
         for (int i = 0; i < ticketElement.size(); i++) {
-            aviaTicket.setPrice(ticketsPriceLabel.get(i).getText());
-            aviaTicket.setRouteDetailsTo(new RouteDetails(departureCityLabel.get(i).getText(), destinationCityLabel.get(i).getText(),
-                    departureDateLabel.get(i).getText()));
-            aviaTicket.setRouteDetailsFrom(new RouteDetails(returnDepartureCityLabel.get(i).getText(), returnDestinationCityLabel.get(i).getText(),
-                    returnDepartureDateLabel.get(i).getText()));
+            AviaTickets aviaTicket = new AviaTickets();
+            aviaTicket.setPrice(CharMatcher.DIGIT.retainFrom(ticketsPriceLabel.get(i).getText()));
+            aviaTicket.setRouteDetailsTo(new RouteDetails(departureCityLabel.get(i).getText(),
+                    destinationCityLabel.get(i).getText(), departureDateLabel.get(i).getText()));
+            aviaTicket.setRouteDetailsFrom(new RouteDetails(returnDepartureCityLabel.get(i).getText(),
+                    returnDestinationCityLabel.get(i).getText(), returnDepartureDateLabel.get(i).getText()));
             aviaTicketsList.add(aviaTicket);
         }
         logger.info("Successfully retrieved data about tickets");
@@ -124,12 +126,12 @@ public class ResultsPage extends BasePage {
         return returnDepartureDateList;
     }
 
-    public List<String> getTicketPricesList() {
+    public List<Integer> getTicketPricesList() {
         WaitUtils.waitForVisibilityOfAllElements(ticketsPriceLabel);
         List<AviaTickets> aviaTicketsList = fetchAviaTicketsDetails();
-        List<String> ticketPriceList = new ArrayList<>();
+        List<Integer> ticketPriceList = new ArrayList<>();
         for (AviaTickets aviaTickets : aviaTicketsList) {
-            ticketPriceList.add(aviaTickets.getPrice());
+            ticketPriceList.add(Integer.parseInt(aviaTickets.getPrice()));
         }
         logger.info("Successfully retrieved ticket prices");
         return ticketPriceList;

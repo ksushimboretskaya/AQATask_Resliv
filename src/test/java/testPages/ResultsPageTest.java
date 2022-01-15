@@ -71,11 +71,11 @@ public class ResultsPageTest extends BaseTest {
                 .setDepartureDate(TODAY_DATE, TOMORROW_DATE).setReturnDepartureDate(TODAY_DATE, DAY_AFTER_TOMORROW_DATE)
                 .setAmountOfPassengers(AMOUNT_OF_ADULTS, AMOUNT_OF_CHILDREN).submitSearchTickets();
 
-        List<String> actualTicketsPriceList = new ResultsPage().getTicketPricesList();
-        List<String> expectedTicketsList = new ResultsPage().getTicketPricesList();
-        expectedTicketsList.sort(Comparator.naturalOrder());
+        List<Integer> actualTicketsPriceList = new ResultsPage().getTicketPricesList();
+        List<Integer> expectedTicketsPriceList = new ResultsPage().getTicketPricesList();
+        expectedTicketsPriceList.sort(Comparator.naturalOrder());
 
-        softAssert.assertTrue(actualTicketsPriceList.equals(expectedTicketsList),
+        softAssert.assertTrue(actualTicketsPriceList.equals(expectedTicketsPriceList),
                 String.format("The actual price list {%s} doesn't match expected", actualTicketsPriceList.toArray()));
     }
 }
