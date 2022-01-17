@@ -1,15 +1,15 @@
 package pages;
 
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import webdriver.DriverManager;
 
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
+@Log4j2
 public class BasePage {
 
-    private final Logger logger = Logger.getLogger("Base page logger");
     protected WebDriver driver;
 
     public BasePage() {
@@ -17,11 +17,11 @@ public class BasePage {
         PageFactory.initElements(this.driver, this);
     }
 
-    public void switchToOpenTab() {
+    protected void switchToOpenTab() {
         ArrayList<String> openTabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(openTabs.get(0)).close();
-        logger.info("Successfully closed the previous page");
+        log.info("Successfully closed the previous page");
         driver.switchTo().window(openTabs.get(1));
-        logger.info("Successfully opened a new page");
+        log.info("Successfully opened a new page");
     }
 }

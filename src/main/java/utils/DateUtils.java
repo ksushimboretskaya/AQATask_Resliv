@@ -9,7 +9,7 @@ public class DateUtils {
         return LocalDate.now().plusDays(increment);
     }
 
-    public static String getFormattedDateRelativeToTodayPlusTheNumberOfDay(LocalDate localDate, String pattern) {
+    public static String formatDateToPattern(LocalDate localDate, String pattern) {
         return localDate.format(DateTimeFormatter.ofPattern(pattern)).toLowerCase().replace(".", "");
     }
 }

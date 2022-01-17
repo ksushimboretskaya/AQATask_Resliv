@@ -9,7 +9,7 @@ import webdriver.DriverManager;
 
 public class BaseTest {
 
-    public static final String AVIASALES_URL = "https://www.aviasales.by/";
+    private static final String AVIASALES_URL = "https://www.aviasales.by/";
 
     @BeforeSuite(description = "Set up browser driver")
     public void setUp() {
