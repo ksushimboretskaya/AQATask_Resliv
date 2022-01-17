@@ -1,6 +1,7 @@
 package testPages;
 
 import base.BaseTest;
+import data.AviaTicket;
 import listener.TestListener;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -25,23 +26,22 @@ public class ResultsPageTest extends BaseTest {
     private final LocalDate TOMORROW_DATE = DateUtils.getTheDateRelativeToTodayPlusTheNumberOfDay(1);
     private final LocalDate DAY_AFTER_TOMORROW_DATE = DateUtils.getTheDateRelativeToTodayPlusTheNumberOfDay(2);
 
-    private final SoftAssert softAssert = new SoftAssert();
-
     @Test(priority = 1, description = "Verify departure and destination city name")
     public void verifyCityName() {
-        new MainPage().chooseDepartureCountry(MOSCOW_CITY)
+        ResultsPage resultsPage = new MainPage().chooseDepartureCountry(MOSCOW_CITY)
                 .chooseDestinationCountry(SANKT_PETERBURG_CITY)
                 .setDepartureDate(TODAY_DATE, TOMORROW_DATE)
                 .setReturnDepartureDate(TODAY_DATE, DAY_AFTER_TOMORROW_DATE)
                 .setAmountOfPassengers(AMOUNT_OF_ADULTS, AMOUNT_OF_CHILDREN)
                 .submitSearchTickets();
 
-        ResultsPage resultsPage = new ResultsPage();
-        List<String> departureCityNamesList = resultsPage.getDepartureCityNameList();
-        List<String> destinationCityNameList = resultsPage.getDestinationCityNameList();
-        List<String> returnDepartureCityNameList = resultsPage.getReturnDepartureCityNameList();
-        List<String> returnDestinationCityNameList = resultsPage.getReturnDestinationCityNameList();
+        List<AviaTicket> aviaTicketList = resultsPage.fetchAviaTicketsDetails();
+        List<String> departureCityNamesList = resultsPage.getDepartureCityNameList(aviaTicketList);
+        List<String> destinationCityNameList = resultsPage.getDestinationCityNameList(aviaTicketList);
+        List<String> returnDepartureCityNameList = resultsPage.getReturnDepartureCityNameList(aviaTicketList);
+        List<String> returnDestinationCityNameList = resultsPage.getReturnDestinationCityNameList(aviaTicketList);
 
+        SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(departureCityNamesList.stream().allMatch(departureCityName -> departureCityName.equals(MOSCOW_CITY)),
                 String.format("The actual departure city names list {%s} doesn't match expected", departureCityNamesList.toArray()));
         softAssert.assertTrue(destinationCityNameList.stream().allMatch(destinationCityName -> destinationCityName.equals(SANKT_PETERBURG_CITY)),
@@ -55,19 +55,20 @@ public class ResultsPageTest extends BaseTest {
 
     @Test(priority = 2, description = "Verify departure and return departure date")
     public void verifyDepartureAndReturnDepartureDate() {
-        new MainPage().chooseDepartureCountry(MOSCOW_CITY)
+        ResultsPage resultsPage = new MainPage().chooseDepartureCountry(MOSCOW_CITY)
                 .chooseDestinationCountry(SANKT_PETERBURG_CITY)
                 .setDepartureDate(TODAY_DATE, TOMORROW_DATE)
                 .setReturnDepartureDate(TODAY_DATE, DAY_AFTER_TOMORROW_DATE)
                 .setAmountOfPassengers(AMOUNT_OF_ADULTS, AMOUNT_OF_CHILDREN)
                 .submitSearchTickets();
 
-        ResultsPage resultsPage = new ResultsPage();
-        List<String> departureDateList = resultsPage.getDepartureDate();
-        List<String> returnDepartureDateList = resultsPage.getReturnDepartureDate();
+        List<AviaTicket> aviaTicketList = resultsPage.fetchAviaTicketsDetails();
+        List<String> departureDateList = resultsPage.getDepartureDate(aviaTicketList);
+        List<String> returnDepartureDateList = resultsPage.getReturnDepartureDate(aviaTicketList);
         String expectedDepartureDate = DateUtils.formatDateToPattern(TOMORROW_DATE, DATE_PATTERN);
         String expectedReturnDepartureDate = DateUtils.formatDateToPattern(DAY_AFTER_TOMORROW_DATE, DATE_PATTERN);
 
+        SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(departureDateList.stream().allMatch(departureDate -> departureDate.equals(expectedDepartureDate)),
                 String.format("The actual departure date list {%s} doesn't match expected", departureDateList.toArray()));
         softAssert.assertTrue(returnDepartureDateList.stream().allMatch(returnDepartureDate -> returnDepartureDate.equals(expectedReturnDepartureDate)),
@@ -77,18 +78,19 @@ public class ResultsPageTest extends BaseTest {
 
     @Test(priority = 3, description = "Verify the sorting of ticket prices")
     public void verifyTheSortingOfTicketPrices() {
-        new MainPage().chooseDepartureCountry(MOSCOW_CITY)
+        ResultsPage resultsPage = new MainPage().chooseDepartureCountry(MOSCOW_CITY)
                 .chooseDestinationCountry(SANKT_PETERBURG_CITY)
                 .setDepartureDate(TODAY_DATE, TOMORROW_DATE)
                 .setReturnDepartureDate(TODAY_DATE, DAY_AFTER_TOMORROW_DATE)
                 .setAmountOfPassengers(AMOUNT_OF_ADULTS, AMOUNT_OF_CHILDREN)
                 .submitSearchTickets();
 
-        ResultsPage resultsPage = new ResultsPage();
-        List<Integer> actualTicketsPriceList = resultsPage.getTicketPricesList();
-        List<Integer> expectedTicketsPriceList = resultsPage.getTicketPricesList();
+        List<AviaTicket> aviaTicketList = resultsPage.fetchAviaTicketsDetails();
+        List<Integer> actualTicketsPriceList = resultsPage.getTicketPricesList(aviaTicketList);
+        List<Integer> expectedTicketsPriceList = resultsPage.getTicketPricesList(aviaTicketList);
         expectedTicketsPriceList.sort(Comparator.naturalOrder());
 
+        SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(actualTicketsPriceList.equals(expectedTicketsPriceList),
                 String.format("The actual price list {%s} doesn't match expected", actualTicketsPriceList.toArray()));
         softAssert.assertAll();

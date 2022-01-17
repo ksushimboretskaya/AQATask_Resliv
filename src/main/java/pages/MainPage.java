@@ -2,7 +2,6 @@ package pages;
 
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
@@ -91,7 +90,7 @@ public class MainPage extends BasePage {
         chooseMonthAndYear(todayDate, MONTH_AND_YEAR_PATTERN);
         log.info("Successfully selected month and year");
 
-        WebElement departureDateElement = createDateWebElement(departureDate.getDayOfMonth());
+        WebElement departureDateElement = getDateWebElement(departureDate.getDayOfMonth());
         log.info("Successfully created departure date web element");
 
         WaitUtils.waitForVisibility(departureDateElement);
@@ -108,7 +107,7 @@ public class MainPage extends BasePage {
         chooseMonthAndYear(todayDate, MONTH_AND_YEAR_PATTERN);
         log.info("Successfully selected month and year");
 
-        WebElement returnDepartureDateElement = createDateWebElement(returnDepartureDate.getDayOfMonth());
+        WebElement returnDepartureDateElement = getDateWebElement(returnDepartureDate.getDayOfMonth());
         log.info("Successfully created return departure date web element");
 
         WaitUtils.waitForVisibility(returnDepartureDateElement);
@@ -121,7 +120,7 @@ public class MainPage extends BasePage {
         new Select(tripMonthAndYearSelectElement).selectByValue(date.format(DateTimeFormatter.ofPattern(datePattern)));
     }
 
-    private WebElement createDateWebElement(int date) {
+    private WebElement getDateWebElement(int date) {
         return driver.findElement(By.xpath("//*[contains(@class,'calendar-day__date') and text()=" + date + "]"));
     }
 

@@ -42,7 +42,7 @@ public class ResultsPage extends BasePage {
         super();
     }
 
-    private List<AviaTicket> fetchAviaTicketsDetails() {
+    public List<AviaTicket> fetchAviaTicketsDetails() {
         WaitUtils.waitForVisibilityOfAllElements(ticketElement);
         List<AviaTicket> aviaTicketsList = new ArrayList<>();
         for (int i = 0; i < ticketElement.size(); i++) {
@@ -58,9 +58,8 @@ public class ResultsPage extends BasePage {
         return aviaTicketsList;
     }
 
-    public List<String> getDepartureCityNameList() {
+    public List<String> getDepartureCityNameList(List<AviaTicket> aviaTicketsList) {
         WaitUtils.waitForVisibilityOfAllElements(departureCityLabel);
-        List<AviaTicket> aviaTicketsList = fetchAviaTicketsDetails();
         List<String> departureCityNamesList = new ArrayList<>();
         for (AviaTicket aviaTickets : aviaTicketsList) {
             departureCityNamesList.add(aviaTickets.getRouteDetailsTo().getDepartureCityName());
@@ -69,9 +68,8 @@ public class ResultsPage extends BasePage {
         return departureCityNamesList;
     }
 
-    public List<String> getDestinationCityNameList() {
+    public List<String> getDestinationCityNameList(List<AviaTicket> aviaTicketsList) {
         WaitUtils.waitForVisibilityOfAllElements(destinationCityLabel);
-        List<AviaTicket> aviaTicketsList = fetchAviaTicketsDetails();
         List<String> destinationCityNamesList = new ArrayList<>();
         for (AviaTicket aviaTickets : aviaTicketsList) {
             destinationCityNamesList.add(aviaTickets.getRouteDetailsTo().getDestinationCityName());
@@ -80,9 +78,8 @@ public class ResultsPage extends BasePage {
         return destinationCityNamesList;
     }
 
-    public List<String> getDepartureDate() {
+    public List<String> getDepartureDate(List<AviaTicket> aviaTicketsList) {
         WaitUtils.waitForVisibilityOfAllElements(departureDateLabel);
-        List<AviaTicket> aviaTicketsList = fetchAviaTicketsDetails();
         List<String> departureDateList = new ArrayList<>();
         for (AviaTicket aviaTickets : aviaTicketsList) {
             departureDateList.add(aviaTickets.getRouteDetailsTo().getDepartureDate());
@@ -91,9 +88,8 @@ public class ResultsPage extends BasePage {
         return departureDateList;
     }
 
-    public List<String> getReturnDepartureCityNameList() {
+    public List<String> getReturnDepartureCityNameList(List<AviaTicket> aviaTicketsList) {
         WaitUtils.waitForVisibilityOfAllElements(returnDepartureCityLabel);
-        List<AviaTicket> aviaTicketsList = fetchAviaTicketsDetails();
         List<String> returnDepartureCityNamesList = new ArrayList<>();
         for (AviaTicket aviaTickets : aviaTicketsList) {
             returnDepartureCityNamesList.add(aviaTickets.getRouteDetailsFrom().getDepartureCityName());
@@ -102,9 +98,8 @@ public class ResultsPage extends BasePage {
         return returnDepartureCityNamesList;
     }
 
-    public List<String> getReturnDestinationCityNameList() {
+    public List<String> getReturnDestinationCityNameList(List<AviaTicket> aviaTicketsList) {
         WaitUtils.waitForVisibilityOfAllElements(departureCityLabel);
-        List<AviaTicket> aviaTicketsList = fetchAviaTicketsDetails();
         List<String> returnDestinationCityNamesList = new ArrayList<>();
         for (AviaTicket aviaTickets : aviaTicketsList) {
             returnDestinationCityNamesList.add(aviaTickets.getRouteDetailsFrom().getDestinationCityName());
@@ -113,9 +108,8 @@ public class ResultsPage extends BasePage {
         return returnDestinationCityNamesList;
     }
 
-    public List<String> getReturnDepartureDate() {
+    public List<String> getReturnDepartureDate(List<AviaTicket> aviaTicketsList) {
         WaitUtils.waitForVisibilityOfAllElements(returnDepartureDateLabel);
-        List<AviaTicket> aviaTicketsList = fetchAviaTicketsDetails();
         List<String> returnDepartureDateList = new ArrayList<>();
         for (AviaTicket aviaTickets : aviaTicketsList) {
             returnDepartureDateList.add(aviaTickets.getRouteDetailsFrom().getDepartureDate());
@@ -124,9 +118,8 @@ public class ResultsPage extends BasePage {
         return returnDepartureDateList;
     }
 
-    public List<Integer> getTicketPricesList() {
+    public List<Integer> getTicketPricesList(List<AviaTicket> aviaTicketsList) {
         WaitUtils.waitForVisibilityOfAllElements(ticketsPriceLabel);
-        List<AviaTicket> aviaTicketsList = fetchAviaTicketsDetails();
         List<Integer> ticketPriceList = new ArrayList<>();
         for (AviaTicket aviaTickets : aviaTicketsList) {
             ticketPriceList.add(Integer.parseInt(aviaTickets.getPrice()));
